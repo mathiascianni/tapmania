@@ -24,6 +24,13 @@ export default function Controller() {
     }
   }
 
+  const sendAction = async (type) => {
+    const { error } = await supabase.from('inputs').insert([
+      { room_code: roomCode, action: type },
+    ])
+    if (error) console.error('❌ Error al enviar acción:', error)
+  }
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
       {!connected ? (
@@ -49,16 +56,16 @@ export default function Controller() {
           <h2 className="text-lg font-bold">¡Conectado a la sala {roomCode}!</h2>
           {/* 👇 Próximo paso: controles */}
           <div className="grid grid-cols-3 gap-2">
-            <button className="col-span-3 bg-gray-300 p-4 rounded">⬆️</button>
-            <button className="bg-gray-300 p-4 rounded">⬅️</button>
+            <button onClick={() => sendAction('up')} className="col-span-3 bg-gray-300 p-4 rounded">⬆️</button>
+            <button onClick={() => sendAction('left')} className="bg-gray-300 p-4 rounded">⬅️</button>
             <div />
-            <button className="bg-gray-300 p-4 rounded">➡️</button>
+            <button onClick={() => sendAction('right')} className="bg-gray-300 p-4 rounded">➡️</button>
             <div />
-            <button className="col-span-3 bg-gray-300 p-4 rounded">⬇️</button>
+            <button onClick={() => sendAction('down')} className="col-span-3 bg-gray-300 p-4 rounded">⬇️</button>
           </div>
           <div className="flex justify-between mt-4">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded">🔵 Acción 1</button>
-            <button className="bg-red-500 text-white py-2 px-4 rounded">🔴 Acción 2</button>
+            <button onClick={() => sendAction('a')} className="bg-blue-500 text-white py-2 px-4 rounded">🔵 Acción 1</button>
+            <button onClick={() => sendAction('b')} className="bg-red-500 text-white py-2 px-4 rounded">🔴 Acción 2</button>
           </div>
         </div>
       )}
