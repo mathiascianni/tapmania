@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../supabaseClient'
 import { createRoom } from '../api/createRoom'
+import { useNavigate } from 'react-router-dom'
 
 const Desktop = () => {
     const [rooms, setRooms] = useState([])
     const [roomCode, setRoomCode] = useState(null)
     const [logs, setLogs] = useState([])
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         // Cargar salas actuales
@@ -62,6 +65,9 @@ const Desktop = () => {
 
     const handleCreateRoom = async () => {
         const { data, error } = await createRoom()
+        if (data && !error) {
+            navigate(`/game/${data.code}`)
+        }
     }
 
     return (
