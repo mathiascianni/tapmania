@@ -3,10 +3,8 @@ import { supabase } from '../supabase/client'
 
 export function useRoom(roomCode) {
   const [actions, setActions] = useState[""]
-
   useEffect(() => {
     const channel = supabase.channel(`room-${roomCode}`)
-
     channel
       .on(
         'broadcast',

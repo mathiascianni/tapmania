@@ -3,6 +3,7 @@ import Desktop from "./views/Desktop"
 import Mobile from "./views/Mobile"
 import ActiveGame from "./views/ActiveGame"
 import { Routes, Route } from "react-router-dom"
+import "./app.css";
 
 
 function App() {
